@@ -1,0 +1,57 @@
+general {
+         output_format = "i3bar"
+         colors = true
+         color_good = "#50FA7B"
+         color_degraded = "#F1FA8C"
+         color_bad = "#FF5555"
+         separator = " | "
+}
+
+order += "disk /"
+order += "disk /mnt/hd/"
+order += "volume 0"
+order += "ethernet enp4s0f2"
+order += "wireless wlp3s0"
+order += "tztime local"
+
+wireless wlp3s0 {
+        format_up = "W: %quality em %essid, %bitrate"
+        format_down = "W: down"
+}
+
+ethernet enp4s0f2 {
+        format_up = "E: %speed"
+        format_down = "E: down"
+}
+
+battery all {
+        format = "%status %percentage %remaining"
+}
+
+disk "/" {
+        format = "🖴 SSD: %avail"
+}
+
+disk "/mnt/hd/" {
+        format = "🖴 HD: %avail"
+}
+
+load {
+        format = "%1min"
+}
+
+memory {
+        format = "%used | %available"
+        threshold_degraded = "1G"
+        format_degraded = "MEMORY < %available"
+}
+
+tztime local {
+        format = "%d/%m/%Y | %H:%M"
+}
+
+volume 0 {
+        format = "🔈 : %volume"
+        format_muted = "🔈 : 🚫  (%volume)"
+        device = "pulse:0"
+}
