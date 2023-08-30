@@ -1,10 +1,11 @@
 # i3wm-configuration
 
-Arquivo pessoal da configuração que julgo próxima do ideal para o i3wm.
+Arquivo pessoal de configuração i3wm.
 
 ### Requisitos
 * Rofi
-* i3blocks
+* Polybar
+* i3lock
 
 ### Tema
 * Dracula
