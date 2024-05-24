@@ -1,0 +1,388 @@
+# I3WM settings
+
+# KEY DEFINITIONS TO REMEMBER
+# $mod = Set below
+# Mod4 = Super key
+# Mod1 = ALT key
+# Control = CTRL key
+# Shift = SHIFT key
+# Escape = ESCAPE key
+# Return = ENTER or RETURN key
+# Tab = TAB key
+
+# set Super key to rule them all
+set $mod Mod4
+
+# vim pattern to move keys
+set $up k
+set $down j
+set $left h
+set $right l
+
+set $firstMonitor HDMI-1
+# set $secondMonitor HDMI-2
+
+floating_modifier $mod
+default_orientation horizontal
+
+# Dracula Theme Customized
+# class                 border  bground text    indicator child_border
+client.focused          #bd93f9 #6272A4 #F8F8F2 #6272A4   #bd93f9
+client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
+client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
+client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
+client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
+client.background       #F8F8F2
+
+font pango:monospace 12
+# End Dracula
+
+################# border control
+hide_edge_borders both
+
+for_window [class="^.*"] border pixel 3
+
+gaps inner 10
+gaps outer 5
+
+
+popup_during_fullscreen smart
+
+### Startup
+# Single and Dual screen - current displays
+exec --no-startup-id xrandr --output DP0 --right-of HDMI-0 --auto
+# Autotiling
+exec_always --no-startup-id autotiling
+# Polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh &      
+# picom
+exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
+
+# Tray Applications
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &    # Authentication dialog
+exec --no-startup-id pamac-tray         # Updater
+exec --no-startup-id nm-applet          # network
+exec --no-startup-id volumeicon         # volume
+exec --no-startup-id variety            # wallpappers
+exec --no-startup-id conky -c ~/.config/i3/system-overview  #conky
+exec --no-startup-id xfce4-power-manager &
+exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+# My Apps
+exec --no-startup-id "flatpak run com.google.Chrome"
+exec --no-startup-id thunar
+exec --no-startup-id spotify
+exec --no-startup-id pavucontrol
+exec --no-startup-id insync start
+exec --no-startup-id copyq
+# feh sets wallpaper
+exec --no-startup-id feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
+exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
+### End Startup
+
+### Workspaces
+workspace 1 output $firstMonitor
+workspace 2 output $firstMonitor
+workspace 3 output $firstMonitor
+workspace 4 output $firstMonitor
+workspace 5 output $firstMonitor
+workspace 6 output $secondMonitor
+workspace 7 output $secondMonitor
+workspace 8 output $secondMonitor
+workspace 9 output $secondMonitor
+workspace 10 output $secondMonitor
+
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1; workspace 1
+bindsym $mod+Shift+2 move container to workspace 2; workspace 2
+bindsym $mod+Shift+3 move container to workspace 3; workspace 3
+bindsym $mod+Shift+4 move container to workspace 4; workspace 4
+bindsym $mod+Shift+5 move container to workspace 5; workspace 5
+bindsym $mod+Shift+6 move container to workspace 6; workspace 6
+bindsym $mod+Shift+7 move container to workspace 7; workspace 7
+bindsym $mod+Shift+8 move container to workspace 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace 9; workspace 9
+bindsym $mod+Shift+0 move container to workspace 10; workspace 10
+
+################# menu's in arcolinux
+
+# start dmenu
+# bindsym $mod+shift+d exec -a-no-startup-id dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+
+
+### Applications keyboard shortcuts  
+
+## Super + ...
+bindsym $mod+Return exec --no-startup-id xfce4-terminal                     
+bindsym $mod+d exec --no-startup-id ~/.config/i3/launcher/launcher.sh       
+bindsym $mod+w exec --no-startup-id "flatpak run com.google.Chrome"         
+bindsym $mod+f exec --no-startup-id thunar                                 
+bindsym $mod+v exec "copyq menu"                                      
+bindsym $mod+p exec "flameshot gui"                                 
+bindsym $mod+m exec --no-startup-id spotify                             
+bindsym $mod+X exec --no-startup-id archlinux-logout
+bindsym $mod+r mode "resize"
+bindsym $mod+g mode "$mode_gaps"
+bindsym $mod+a focus parent
+# edit border
+bindsym $mod+b exec --no-startup-id i3-msg border toggle
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# kill
+bindsym $mod+q kill                                                       
+bindsym --release $mod+Escape exec xkill                                   
+bindsym $mod+Tab workspace back_and_forth
+# WhatsApp Web - Google Chrome App    
+bindsym $mod+i exec --no-startup-id flatpak 'run' '--command=/app/bin/chrome' 'com.google.Chrome' '--profile-directory=Default' '--app-id=hnpfjngllnobngcgfapefoaidbinmjnm'
+
+
+
+## Super + Alt + ...
+# audio shortcuts
+bindsym $mod+mod1+9 exec --no-startup-id "amixer -D pulse sset Master '5%+'"
+bindsym $mod+mod1+8 exec --no-startup-id "amixer -D pulse sset Master '5%-'"
+bindsym $mod+mod1+0 exec --no-startup-id "amixer -D pulse set Master toggle"
+bindsym $mod+mod1+5 exec --no-startup-id playerctl play-pause
+bindsym $mod+mod1+7 exec --no-startup-id playerctl next
+bindsym $mod+mod1+6 exec --no-startup-id playerctl previous
+bindsym $mod+mod1+4 exec --no-startup-id playerctl stop
+# end audio
+bindsym $mod+mod1+d exec "rofi -show window" 
+# tiling
+# split in hor/vert orientation
+bindsym $mod+mod1+h split h                  
+bindsym $mod+mod1+v split v                
+bindsym $mod+mod1+f fullscreen toggle  
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+mod1+s layout stacking
+bindsym $mod+mod1+z layout tabbed
+bindsym $mod+mod1+e layout toggle split          
+
+## Ctrl + Alt + ...
+bindsym control+mod1+t exec --no-startup-id xfce4-terminal --drop-down; focus   
+bindsym control+mod1+m exec --no-startup-id xfce4-settings-manager              
+bindsym control+mod1+c exec --no-startup-id catfish; focus                      
+bindsym control+mod1+u exec --no-startup-id pavucontrol                        
+bindsym control+mod1+a exec --no-startup-id xfce4-appfinder                     
+bindsym control+mod1+p exec --no-startup-id pamac-manager    
+bindsym control+mod1+w exec --no-startup-id flatpak run com.brave.Browser                
+bindsym control+mod1+X mode "$mode_system"                                     
+# next/previous workspace
+bindsym control+mod1+$right workspace next
+bindsym control+mod1+$left workspace prev
+bindsym control+mod1+o exec --no-startup-id ~/.config/i3/scripts/picom-toggle.sh
+
+
+## Super + Shift + ...
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+w exec --no-startup-id "flatpak run com.google.Chrome --incognito"
+bindsym $mod+Shift+r restart       # restart i3
+bindsym $mod+Shift+c reload        # reload config file
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+## Alt + Shift + ...
+# next/previous workspace
+bindsym Mod1+Tab workspace next
+bindsym Mod1+Shift+Tab workspace prev
+bindsym Mod1+Shift+w exec --no-startup-id "flatpak run com.brave.Browser --incognito"
+# next wallpaper
+bindsym mod1+Shift+n exec --no-startup-id variety -n && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
+# previous wallpaper
+bindsym mod1+Shift+p exec --no-startup-id variety -p && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
+# trash wallpaper
+bindsym mod1+Shift+t exec --no-startup-id variety -t && wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)&
+# Update Wallpaper
+bindsym mod1+Shift+u exec --no-startup-id wal -i $(cat $HOME/.config/variety/wallpaper/wallpaper.jpg.txt)
+
+## Ctrl + Shift + ...
+bindsym control+Shift+Escape exec --no-startup-id xfce4-taskmanager;focus       
+
+## Super + Ctrl + Alt + ...
+# Resizing by
+set $res 3
+bindsym $mod+Mod1+Ctrl+$right resize shrink width $res px or $res ppt
+bindsym $mod+Mod1+Ctrl+$up resize grow height $res px or $res ppt
+bindsym $mod+Mod1+Ctrl+$down resize shrink height $res px or $res ppt
+bindsym $mod+Mod1+Ctrl+$left resize grow width $res px or $res ppt
+
+## Others
+bindsym F12 exec --no-startup-id xfce4-terminal --drop-down; focus
+bindsym $mod+space focus mode_toggle
+
+
+### End shortcuts
+
+
+### Funções
+# função de sair do sistema
+set $mode_system System (k) lock, (l) logout, (u) suspend, (h) hibernate, (r) reboot, (s) shutdown
+
+mode "$mode_system" {
+    bindsym k exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
+    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
+    bindsym u exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+  
+mode "resize" {
+      bindsym $left       resize shrink width 10 px or 10 ppt
+      bindsym $down       resize grow height 10 px or 10 ppt
+      bindsym $up         resize shrink height 10 px or 10 ppt
+      bindsym $right      resize grow width 10 px or 10 ppt
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+}
+
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+### Assignments
+
+# Workspace 1 internet
+assign [class="Firefox|Vivaldi-stable|Vivaldi-snapshot|Opera"]  1
+assign [class="Chromium|Google-chrome"] 1
+
+# Workspace 2 text editor related dev
+assign [class="sublime-text|sublime_text|Sublime_text|subl|Subl|subl3|Subl3"]     → 2
+assign [class="Xed|xed|Brackets|Atom|Code|Geany|code-oss"]  2
+
+# Workspace 3 email messages
+assign [class="^discord"] 3
+assign [class="TelegramDesktop"] 3
+for_window [title="WhatsApp Web"] move to workspace 3, resize set 965 765, floating enable
+
+# Workspace 4 music
+# assign [class="^Pavucontrol"] 4
+for_window [class="^Pavucontrol"] move to workspace 4, resize set 32ppt 0
+for_window [class="Spotify"] move to workspace 4
+
+# Workspace 5 file managers
+assign [class="Nemo|Thunar|Caja|nautilus|Nautilus|Dolphin"] 5
+
+# Workspace 6 video 
+assign [class="Vlc|vlc"]    6
+assign [class="mpv"]    6
+
+# Workspace 7 Images and meld
+# assign [class="ristretto|Ristretto|shotwell|Shotwell|Xviewer|Nitrogen|feh|gthumb|Gthumb|eog|Eog|Pinta|pixeluvo|Pixeluvo|Meld"]        7
+
+# Workspace 8 virtual machines and settings
+assign [class="Vmplayer|VirtualBox"]    8
+
+# Workspace 10 - Exp
+assign [class="qBittorrent|qbittorrent|ktorrent|Ktorrent"]  10
+for_window [title="Nova guia anônima - Google Chrome"] move to workspace 10
+for_window [title="Nova guia privada - Brave"] move to workspace 10
+
+
+### Floatings
+
+for_window [class="Arcolinux-welcome-app.py"] floating enable
+for_window [class="Archlinux-tweak-tool.py"] floating enable
+for_window [class="Arcolinux-calamares-tool.py"] floating enable
+for_window [class="Bleachbit"] floating disable
+for_window [class="Blueberry.py"] floating enable
+for_window [class="Brasero"] floating disable
+for_window [class="Galculator"] floating enable
+for_window [class="Gnome-disks"] floating disable
+for_window [class="^Gnome-font-viewer$"] floating enable
+for_window [class="^Gpick$"] floating enable
+for_window [class="Hexchat"] floating disable
+for_window [class="Imagewriter"] floating enable
+for_window [class="Font-manager"] floating enable
+for_window [class="qt5ct|Lxappearance"] floating enable
+for_window [class="Nitrogen"] floating disable
+for_window [class="Pavucontrol"] floating disable
+for_window [class="Peek"] floating enable
+for_window [class="^Skype$"] floating enable
+for_window [class="^Spotify$"] floating disable
+for_window [class="System-config-printer.py"] floating enable
+for_window [class="Unetbootin.elf"] floating enable
+for_window [class="Usb-creator-gtk"] floating enable
+for_window [class="^Vlc$"] floating disable
+for_window [class="Wine"] floating disable
+for_window [class="Xfburn"] floating disable
+for_window [class="Xfce4-appfinder"] floating enable
+for_window [class="Xfce4-settings-manager"] floating disable
+for_window [class="Xfce4-taskmanager"] floating enable
+# for_window [instance="gimp"] floating disable
+for_window [instance="script-fu"] border normal
+for_window [instance="variety"] floating disable
+for_window [title="Copying"] floating enable
+for_window [title="Deleting"] floating enable
+for_window [title="Moving"] floating enable
+for_window [title="^Terminator Preferences$"] floating enable
+# for_window [window_role="^gimp-toolbox-color-dialog$"] floating enable
+for_window [window_role="^Preferences$"] floating enable
+for_window [window_role="setup"] floating enable
+# for_window [window_role="pop-up"] floating enable     # aqui se encaixam os web apps do Chrome
+
+### give focus to applications       
+for_window [urgent=latest] focus
+for_window [class="Gnome-terminal"] focus
+for_window [class="Termite"] focus
+for_window [class="Terminator"] focus
+for_window [class="Urxvt"] focus
+for_window [class="Alacritty"] focus
+for_window [class="Thunar"] focus
