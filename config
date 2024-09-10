@@ -42,8 +42,8 @@ hide_edge_borders both
 
 for_window [class="^.*"] border pixel 3
 
-gaps inner 10
-gaps outer 5
+gaps inner 20
+gaps outer 10
 
 
 popup_during_fullscreen smart
@@ -59,12 +59,12 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh &
 exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
 
 # Tray Applications
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &    # Authentication dialog
-exec --no-startup-id pamac-tray         # Updater
-exec --no-startup-id nm-applet          # network
-exec --no-startup-id volumeicon         # volume
-exec --no-startup-id variety            # wallpappers
-exec --no-startup-id conky -c ~/.config/i3/system-overview  #conky
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &   
+exec --no-startup-id pamac-tray         
+exec --no-startup-id nm-applet          
+exec --no-startup-id volumeicon         
+exec --no-startup-id variety            
+#exec --no-startup-id conky -c ~/.config/conky/Minimalis/conky.conf  
 exec --no-startup-id xfce4-power-manager &
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 # My Apps
@@ -75,8 +75,8 @@ exec --no-startup-id pavucontrol
 exec --no-startup-id insync start
 exec --no-startup-id copyq
 # feh sets wallpaper
-exec --no-startup-id feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
-exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
+# exec --no-startup-id feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
+# exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
 ### End Startup
 
 ### Workspaces
@@ -126,13 +126,15 @@ bindsym $mod+Shift+0 move container to workspace 10; workspace 10
 
 ## Super + ...
 bindsym $mod+Return exec --no-startup-id xfce4-terminal                     
-bindsym $mod+d exec --no-startup-id ~/.config/i3/launcher/launcher.sh       
+#bindsym $mod+d exec --no-startup-id ~/.config/i3/launcher/launcher.sh
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/files/scripts/launcher_t2
 bindsym $mod+w exec --no-startup-id "flatpak run com.google.Chrome"         
 bindsym $mod+f exec --no-startup-id thunar                                 
 bindsym $mod+v exec "copyq menu"                                      
 bindsym $mod+p exec "flameshot gui"                                 
 bindsym $mod+m exec --no-startup-id spotify                             
-bindsym $mod+X exec --no-startup-id archlinux-logout
+#bindsym $mod+X exec --no-startup-id archlinux-logout
+bindsym $mod+X exec --no-startup-id ~/.config/rofi/files/scripts/powermenu_t1
 bindsym $mod+r mode "resize"
 bindsym $mod+g mode "$mode_gaps"
 bindsym $mod+a focus parent
@@ -149,7 +151,7 @@ bindsym --release $mod+Escape exec xkill
 bindsym $mod+Tab workspace back_and_forth
 # WhatsApp Web - Google Chrome App    
 bindsym $mod+i exec --no-startup-id flatpak 'run' '--command=/app/bin/chrome' 'com.google.Chrome' '--profile-directory=Default' '--app-id=hnpfjngllnobngcgfapefoaidbinmjnm'
-
+bindsym $mod+c exec --no-startup-id flatpak 'run' '--command=/app/bin/chrome' 'com.google.Chrome' '--profile-directory=Default' '--app-id=kjbdgfilnfhdoflbpgamdcdgpehopbep'
 
 
 ## Super + Alt + ...
@@ -186,6 +188,9 @@ bindsym control+mod1+X mode "$mode_system"
 bindsym control+mod1+$right workspace next
 bindsym control+mod1+$left workspace prev
 bindsym control+mod1+o exec --no-startup-id ~/.config/i3/scripts/picom-toggle.sh
+bindsym control+mod1+1 exec --no-startup-id flatpak 'run' '--command=/app/bin/chrome' 'com.google.Chrome' '--profile-directory=Default' '--app-id=hnpfjngllnobngcgfapefoaidbinmjnm' 
+bindsym control+mod1+2 exec --no-startup-id flatpak run org.telegram.desktop
+bindsym control+mod1+3 exec --no-startup-id flatpak run com.discordapp.Discord 
 
 
 ## Super + Shift + ...
@@ -314,7 +319,7 @@ for_window [title="WhatsApp Web"] move to workspace 3, resize set 965 765, float
 
 # Workspace 4 music
 # assign [class="^Pavucontrol"] 4
-for_window [class="^Pavucontrol"] move to workspace 4, resize set 32ppt 0
+for_window [class="pavucontrol"] move to workspace 4, resize set 32ppt 0
 for_window [class="Spotify"] move to workspace 4
 
 # Workspace 5 file managers
@@ -329,6 +334,9 @@ assign [class="mpv"]    6
 
 # Workspace 8 virtual machines and settings
 assign [class="Vmplayer|VirtualBox"]    8
+
+# Workspace 9
+assign [class="steam|Steam"]    9
 
 # Workspace 10 - Exp
 assign [class="qBittorrent|qbittorrent|ktorrent|Ktorrent"]  10
@@ -366,6 +374,7 @@ for_window [class="Xfburn"] floating disable
 for_window [class="Xfce4-appfinder"] floating enable
 for_window [class="Xfce4-settings-manager"] floating disable
 for_window [class="Xfce4-taskmanager"] floating enable
+for_window [class="TelegramDesktop|telegram-desktop"] floating enable
 # for_window [instance="gimp"] floating disable
 for_window [instance="script-fu"] border normal
 for_window [instance="variety"] floating disable
@@ -376,7 +385,7 @@ for_window [title="^Terminator Preferences$"] floating enable
 # for_window [window_role="^gimp-toolbox-color-dialog$"] floating enable
 for_window [window_role="^Preferences$"] floating enable
 for_window [window_role="setup"] floating enable
-# for_window [window_role="pop-up"] floating enable     # aqui se encaixam os web apps do Chrome
+for_window [window_role="pop-up"] floating enable, move to workspace 3
 
 ### give focus to applications       
 for_window [urgent=latest] focus
